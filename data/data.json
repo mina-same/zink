@@ -1,0 +1,124 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Classic Hoodie",
+      "color": "Black",
+      "size": "M",
+      "category": "Hoodies",
+      "price": 200,
+      "inStock": 1,
+      "quantity": 1,
+      "packaging": "Default package (free)"
+    },
+    {
+      "id": 2,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Casual T-Shirt",
+      "color": "White",
+      "size": "L",
+      "category": "T-Shirts",
+      "price": 100,
+      "inStock": 10,
+      "quantity": 1,
+      "packaging": "Eco-friendly package"
+    },
+    {
+      "id": 3,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Stylish Jacket",
+      "color": "Blue",
+      "size": "XL",
+      "category": "Jackets",
+      "price": 300,
+      "inStock": 5,
+      "quantity": 1,
+      "packaging": "Premium packaging"
+    },
+    {
+      "id": 4,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Sporty Shorts",
+      "color": "Gray",
+      "size": "M",
+      "category": "Shorts",
+      "price": 80,
+      "inStock": 15,
+      "quantity": 1,
+      "packaging": "Default package (free)"
+    },
+    {
+      "id": 5,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Summer Cap",
+      "color": "Red",
+      "size": "One Size",
+      "category": "Accessories",
+      "price": 50,
+      "inStock": 20,
+      "quantity": 1,
+      "packaging": "Default package (free)"
+    },
+    {
+      "id": 6,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Winter Scarf",
+      "color": "Green",
+      "size": "One Size",
+      "category": "Accessories",
+      "price": 120,
+      "inStock": 7,
+      "quantity": 1,
+      "packaging": "Eco-friendly package"
+    },
+    {
+      "id": 7,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Classic Jeans",
+      "color": "Denim Blue",
+      "size": "32",
+      "category": "Pants",
+      "price": 250,
+      "inStock": 8,
+      "quantity": 1,
+      "packaging": "Premium packaging"
+    },
+    {
+      "id": 8,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Comfort Sneakers",
+      "color": "Black",
+      "size": "42",
+      "category": "Shoes",
+      "price": 400,
+      "inStock": 12,
+      "quantity": 1,
+      "packaging": "Default package (free)"
+    },
+    {
+      "id": 9,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Elegant Belt",
+      "color": "Brown",
+      "size": "L",
+      "category": "Accessories",
+      "price": 70,
+      "inStock": 25,
+      "quantity": 1,
+      "packaging": "Default package (free)"
+    },
+    {
+      "id": 10,
+      "image": "https://res.cloudinary.com/dtcr7vypb/image/upload/v1733782515/htsbgdqbvoeuemfvcafq.png",
+      "name": "Cotton Socks",
+      "color": "White",
+      "size": "One Size",
+      "category": "Accessories",
+      "price": 30,
+      "inStock": 50,
+      "quantity": 1,
+      "packaging": "Eco-friendly package"
+    }
+  ]
+}
