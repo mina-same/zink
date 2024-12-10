@@ -10,7 +10,8 @@
       "price": 200,
       "inStock": 1,
       "quantity": 1,
-      "packaging": "Default package (free)"
+      "packaging": "Default package (free)",
+      "totalPrice": 200
     },
     {
       "id": 2,
@@ -22,7 +23,8 @@
       "price": 100,
       "inStock": 10,
       "quantity": 1,
-      "packaging": "Eco-friendly package"
+      "packaging": "Eco-friendly package",
+      "totalPrice": 100
     },
     {
       "id": 3,
@@ -34,7 +36,8 @@
       "price": 300,
       "inStock": 5,
       "quantity": 1,
-      "packaging": "Premium packaging"
+      "packaging": "Premium packaging",
+      "totalPrice": 300
     },
     {
       "id": 4,
@@ -46,7 +49,8 @@
       "price": 80,
       "inStock": 15,
       "quantity": 1,
-      "packaging": "Default package (free)"
+      "packaging": "Default package (free)",
+      "totalPrice": 80
     },
     {
       "id": 5,
@@ -58,7 +62,8 @@
       "price": 50,
       "inStock": 20,
       "quantity": 1,
-      "packaging": "Default package (free)"
+      "packaging": "Default package (free)",
+      "totalPrice": 50
     },
     {
       "id": 6,
@@ -70,7 +75,8 @@
       "price": 120,
       "inStock": 7,
       "quantity": 1,
-      "packaging": "Eco-friendly package"
+      "packaging": "Eco-friendly package",
+      "totalPrice": 1200
     },
     {
       "id": 7,
@@ -82,7 +88,8 @@
       "price": 250,
       "inStock": 8,
       "quantity": 1,
-      "packaging": "Premium packaging"
+      "packaging": "Premium packaging",
+      "totalPrice": 250
     },
     {
       "id": 8,
@@ -94,7 +101,8 @@
       "price": 400,
       "inStock": 12,
       "quantity": 1,
-      "packaging": "Default package (free)"
+      "packaging": "Default package (free)",
+      "totalPrice": 400
     },
     {
       "id": 9,
@@ -106,7 +114,8 @@
       "price": 70,
       "inStock": 25,
       "quantity": 1,
-      "packaging": "Default package (free)"
+      "packaging": "Default package (free)",
+      "totalPrice": 70
     },
     {
       "id": 10,
@@ -118,7 +127,8 @@
       "price": 30,
       "inStock": 50,
       "quantity": 1,
-      "packaging": "Eco-friendly package"
+      "packaging": "Eco-friendly package",
+      "totalPrice": 30
     }
   ]
 }

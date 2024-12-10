@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import productsData from "../data/data.json";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
+import { data } from "autoprefixer";
 
 const styles = {
   container: {
@@ -134,11 +135,28 @@ const SearchPage = () => {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const calculateTotalPrice = () => {
-    // Assuming each product has a 'price' property
-    return selectedProducts?.reduce(
-      (total, product) => total + product.price,
-      0
+  const deleteProduct = (productId) => {
+    setSelectedProducts(selectedProducts.filter((selectedProducts) => selectedProducts.id !== productId));
+  };
+
+  const handleQuantityChange = (id, newQuantity) => {
+    if (newQuantity < 1) return; // Prevent quantity from going below 1
+  
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product => {
+        // Ensure the price is a valid number
+        if (typeof product.price !== 'number' || typeof newQuantity !== 'number') {
+          console.error('Invalid price or quantity value', product.price, newQuantity);
+          return product;
+        }
+  
+        // Calculate total price based on the product's price and new quantity
+        const totalPrice = product.price * newQuantity;
+  
+        return product.id === id
+          ? { ...product, quantity: newQuantity, totalPrice: totalPrice }
+          : product;
+      })
     );
   };
 
@@ -227,7 +245,7 @@ const SearchPage = () => {
             />
             {/* Only show the selected products */}
             {selectedProducts.map((product) => (
-              <ProductCard key={product.id} productData={product} />
+              <ProductCard key={product.id} productData={product}  deleteProduct={deleteProduct} handleQuantityChange={handleQuantityChange} />
             ))}
             <div
               style={{
@@ -261,7 +279,7 @@ const SearchPage = () => {
                   justifyContent: "end",
                 }}
               >
-                LE {calculateTotalPrice()}
+                LE {selectedProducts.reduce((acc, product) => acc + product.totalPrice, 0)}
               </div>
             </div>
           </div>

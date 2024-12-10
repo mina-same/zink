@@ -1,6 +1,8 @@
+"use client";
+
 import { Padding } from "@mui/icons-material";
 import Image from "next/image";
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 const styles: {
@@ -25,9 +27,10 @@ const styles: {
     paddingTop: 10,
     paddingBottom: 10,
     background: "white",
-    boxShadow: "0px 4px 6px -2px rgba(16, 24, 40, 0.03)",
+    boxShadow: "0px 4px 6px -2px rgba(16, 24, 40, 0.07)",
     borderRadius: 8,
     overflow: "visible", // Make sure the shadow isn't clipped
+    marginBottom: 16,
   },
   category: {
     color: "#6941C6",
@@ -72,7 +75,32 @@ const styles: {
   },
 };
 
-const ProductCard = ({ kay, productData }) => {
+const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) => {
+  const [quantity, setQuantity] = useState(productData.quantity);
+
+  const handleDelete = () => {
+    deleteProduct(productData.id); // Call deleteProduct function passed from parent
+  };
+
+  const handleIncrement = () => {
+    setQuantity((prev) => {
+      const newQuantity = prev + 1;
+      handleQuantityChange(productData.id, newQuantity); // Update quantity in the parent
+      return newQuantity;
+    });
+  };
+
+  const handleDecrement = () => {
+    setQuantity((prev) => {
+      if (prev > 1) { // Prevent quantity from going below 1
+        const newQuantity = prev - 1;
+        handleQuantityChange(productData.id, newQuantity); // Update quantity in the parent
+        return newQuantity;
+      }
+      return prev; // Keep the quantity at 1
+    });
+  };
+
   return (
     <div style={styles.container}>
       <Image
@@ -167,8 +195,10 @@ const ProductCard = ({ kay, productData }) => {
             <Image
               src="/images/svg/Delete.svg"
               alt="delete"
+              style={{ cursor: "pointer" }}
               width={24}
               height={24}
+              onClick={handleDelete}
             />
 
             <div
@@ -181,7 +211,7 @@ const ProductCard = ({ kay, productData }) => {
                 fontWeight: "400",
               }}
             >
-              LE {productData.price}
+              LE {productData.totalPrice}
             </div>
           </div>
         </div>
@@ -296,6 +326,7 @@ const ProductCard = ({ kay, productData }) => {
                   cursor: "pointer",
                   opacity: 0.5,
                 }}
+                onClick={() => handleQuantityChange(productData.id, productData.quantity + 1)}
               >
                 +
               </div>
@@ -308,7 +339,7 @@ const ProductCard = ({ kay, productData }) => {
                   fontWeight: "700",
                 }}
               >
-                1
+                {productData.quantity}
               </div>
               <div
                 style={{
@@ -322,6 +353,7 @@ const ProductCard = ({ kay, productData }) => {
                   cursor: "pointer",
                   opacity: 0.5,
                 }}
+                onClick={() => handleQuantityChange(productData.id, productData.quantity - 1)}
               >
                 -
               </div>
