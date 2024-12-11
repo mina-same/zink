@@ -1,12 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { TextField, InputAdornment, Button } from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  TextField,
+  InputAdornment,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import productsData from "../data/data.json";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
 import { data } from "autoprefixer";
+import ProductSearchResultCard from "./ProductSearchResultCard";
 
 const styles = {
   container: {
@@ -88,6 +94,7 @@ const styles = {
     fontSize: 15,
     fontFamily: "Arial",
     fontWeight: "700",
+    // marginTop: "290px",
   },
   searchResultsContainer: {
     width: "100%",
@@ -100,6 +107,24 @@ const styles = {
     zIndex: 1000,
     position: "absolute",
   },
+  searchResult: {
+    top: "-50px",
+    width: "600px",
+    border: "1px solid rgb(208, 213, 221)",
+    zIndex: 999,
+    position: "absolute",
+    background: "rgb(255, 255, 255)",
+    maxHeight: "500px",
+    minHeight: "257px",
+    overflowY: "auto",
+    borderRadius: "7px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingLeft: "3px",
+    paddingTop: "290px",
+  },
   searchResultItem: {
     padding: "10px 14px",
     cursor: "pointer",
@@ -107,12 +132,32 @@ const styles = {
     fontSize: "16px",
     fontFamily: "Inter, sans-serif",
   },
+  emptyCartSearch: {
+    top: "-50px",
+    width: "600px",
+    border: "1px solid rgb(208, 213, 221)",
+    zIndex: 999,
+    position: "absolute",
+    background: "rgb(255, 255, 255)",
+    maxHeight: "500px",
+    minHeight: "257px",
+    overflowY: "auto",
+    borderRadius: "7px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingLeft: "3px",
+  },
 };
 
 const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]); // Array to store selected products
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const searchInputRef = useRef(null); // Reference to the search input container
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -129,36 +174,84 @@ const SearchPage = () => {
     }
     setSearchQuery(""); // Clear the search query
     setShowSearchResults(false); // Hide search results after selection
+    setIsSearching(false); // Stop searching
   };
 
-  const matchingProducts = productsData?.products.filter((product) =>
+  const matchingProducts = (productsData?.products || []).filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  console.log(matchingProducts);
+
   const deleteProduct = (productId) => {
-    setSelectedProducts(selectedProducts.filter((selectedProducts) => selectedProducts.id !== productId));
+    setSelectedProducts(
+      selectedProducts.filter(
+        (selectedProducts) => selectedProducts.id !== productId
+      )
+    );
+  };
+
+  const addProduct = (productId) => {
+    setSelectedProducts(
+      selectedProducts.filter(
+        (selectedProducts) => selectedProducts.id === productId
+      )
+    );
+  };
+
+  const handelFoucs = () => {
+    if (showSearchResults) {
+      setShowSearchResults(false);
+    } else {
+      setShowSearchResults(true);
+    }
   };
 
   const handleQuantityChange = (id, newQuantity) => {
     if (newQuantity < 1) return; // Prevent quantity from going below 1
-  
-    setSelectedProducts(prevProducts =>
-      prevProducts.map(product => {
+
+    setSelectedProducts((prevProducts) =>
+      prevProducts.map((product) => {
         // Ensure the price is a valid number
-        if (typeof product.price !== 'number' || typeof newQuantity !== 'number') {
-          console.error('Invalid price or quantity value', product.price, newQuantity);
+        if (
+          typeof product.price !== "number" ||
+          typeof newQuantity !== "number"
+        ) {
+          console.error(
+            "Invalid price or quantity value",
+            product.price,
+            newQuantity
+          );
           return product;
         }
-  
+
         // Calculate total price based on the product's price and new quantity
         const totalPrice = product.price * newQuantity;
-  
+
         return product.id === id
           ? { ...product, quantity: newQuantity, totalPrice: totalPrice }
           : product;
       })
     );
   };
+
+  // Close search results when clicking outside the search input
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target)
+      ) {
+        setShowSearchResults(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div style={styles.container}>
@@ -169,13 +262,14 @@ const SearchPage = () => {
         </div>
 
         {/* Search Input */}
-        <div style={styles.searchInputContainer}>
+        <div ref={searchInputRef} style={styles.searchInputContainer}>
           <TextField
             variant="standard"
             placeholder="Search Products and Variants"
             fullWidth
             value={searchQuery}
             onChange={handleSearchChange}
+            onFocus={handelFoucs}
             InputProps={{
               disableUnderline: true,
               startAdornment: (
@@ -189,17 +283,42 @@ const SearchPage = () => {
         </div>
 
         {/* Search Results */}
-        {showSearchResults && matchingProducts?.length > 0 && (
+        {showSearchResults && (
           <div style={styles.searchResultsContainer}>
-            {matchingProducts.map((product) => (
-              <div
-                key={product.id}
-                style={styles.searchResultItem}
-                onClick={() => handleProductSelection(product)}
-              >
-                {product.name}
+            {isLoading ? (
+              // Display spinner during loading
+              <CircularProgress />
+            ) : searchQuery === "" ? (
+              // Empty state when search query is empty
+              <div style={styles.emptyCartSearch}>
+                <Image
+                  src="/images/svg/empty-cart.svg"
+                  alt="Empty Cart"
+                  width={72}
+                  height={92}
+                  style={{ borderRadius: 8 }}
+                />
+                <div style={styles.emptyCartText}>
+                  Added products will appear here
+                </div>
               </div>
-            ))}
+            ) : matchingProducts.length > 0 ? (
+              // Show results count when matches exist
+              <div style={styles.searchResult}>
+                  {matchingProducts.map((product) => (
+                    <ProductSearchResultCard
+                      key={product.id}
+                      matchingProducts={product}
+                      addProduct={addProduct}
+                    />
+                  ))}
+              </div>
+            ) : (
+              // Message for no matches
+              <div style={styles.emptyCartSearch}>
+                <div style={styles.emptyCartText}>No products found</div>
+              </div>
+            )}
           </div>
         )}
 
@@ -245,7 +364,12 @@ const SearchPage = () => {
             />
             {/* Only show the selected products */}
             {selectedProducts.map((product) => (
-              <ProductCard key={product.id} productData={product}  deleteProduct={deleteProduct} handleQuantityChange={handleQuantityChange} />
+              <ProductCard
+                key={product.id}
+                productData={product}
+                deleteProduct={deleteProduct}
+                handleQuantityChange={handleQuantityChange}
+              />
             ))}
             <div
               style={{
@@ -279,7 +403,11 @@ const SearchPage = () => {
                   justifyContent: "end",
                 }}
               >
-                LE {selectedProducts.reduce((acc, product) => acc + product.totalPrice, 0)}
+                LE{" "}
+                {selectedProducts.reduce(
+                  (acc, product) => acc + product.totalPrice,
+                  0
+                )}
               </div>
             </div>
           </div>

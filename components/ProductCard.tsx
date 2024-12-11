@@ -216,7 +216,7 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
           </div>
         </div>
 
-        {/*  */}
+        {/* line seaprator */}
         <div
           style={{
             display: "flex",
