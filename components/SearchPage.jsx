@@ -68,6 +68,7 @@ const styles = {
     lineHeight: "24px",
     color: "#101828",
     opacity: 0.5,
+    backgroundColor: "#fff",
   },
   buttons: {
     display: "flex",
@@ -100,15 +101,17 @@ const styles = {
     width: "100%",
     maxWidth: 600,
     marginTop: 10,
-    background: "#fff",
+    background: "#f9fafb",
     border: "1px solid #ddd",
     borderRadius: 8,
     boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
     zIndex: 1000,
     position: "absolute",
+
   },
   searchResult: {
-    top: "-50px",
+    top: "-10px",
+    left: "-305px",
     width: "600px",
     border: "1px solid rgb(208, 213, 221)",
     zIndex: 999,
@@ -123,7 +126,7 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
     paddingLeft: "3px",
-    paddingTop: "290px",
+    // paddingTop: "546px",
   },
   searchResultItem: {
     padding: "10px 14px",
@@ -133,7 +136,8 @@ const styles = {
     fontFamily: "Inter, sans-serif",
   },
   emptyCartSearch: {
-    top: "-50px",
+    top: "-10px",
+    left: "-300px",
     width: "600px",
     border: "1px solid rgb(208, 213, 221)",
     zIndex: 999,
@@ -192,11 +196,17 @@ const SearchPage = () => {
   };
 
   const addProduct = (productId) => {
-    setSelectedProducts(
-      selectedProducts.filter(
-        (selectedProducts) => selectedProducts.id === productId
-      )
-    );
+    setSelectedProducts((prevSelectedProducts) => {
+      // Check if the product is already in the list
+      if (prevSelectedProducts.some((product) => product.id === productId)) {
+        return prevSelectedProducts; // Do nothing if the product is already added
+      }
+      // Find the product to add from the matchingProducts list
+      const productToAdd = matchingProducts.find(
+        (product) => product.id === productId
+      );
+      return [...prevSelectedProducts, productToAdd];
+    });
   };
 
   const handelFoucs = () => {
@@ -283,28 +293,29 @@ const SearchPage = () => {
         </div>
 
         {/* Search Results */}
-        {showSearchResults && (
-          <div style={styles.searchResultsContainer}>
-            {isLoading ? (
-              // Display spinner during loading
-              <CircularProgress />
-            ) : searchQuery === "" ? (
-              // Empty state when search query is empty
-              <div style={styles.emptyCartSearch}>
-                <Image
-                  src="/images/svg/empty-cart.svg"
-                  alt="Empty Cart"
-                  width={72}
-                  height={92}
-                  style={{ borderRadius: 8 }}
-                />
-                <div style={styles.emptyCartText}>
-                  Added products will appear here
+        <div style={{ position: "relative" }}>
+          {showSearchResults && (
+            <div style={styles.searchResultsContainer}>
+              {isLoading ? (
+                // Display spinner during loading
+                <CircularProgress />
+              ) : searchQuery === "" ? (
+                // Empty state when search query is empty
+                <div style={styles.emptyCartSearch}>
+                  <Image
+                    src="/images/svg/empty-cart.svg"
+                    alt="Empty Cart"
+                    width={72}
+                    height={92}
+                    style={{ borderRadius: 8 }}
+                  />
+                  <div style={styles.emptyCartText}>
+                    Added products will appear here
+                  </div>
                 </div>
-              </div>
-            ) : matchingProducts.length > 0 ? (
-              // Show results count when matches exist
-              <div style={styles.searchResult}>
+              ) : matchingProducts.length > 0 ? (
+                // Show results count when matches exist
+                <div style={styles.searchResult}>
                   {matchingProducts.map((product) => (
                     <ProductSearchResultCard
                       key={product.id}
@@ -312,15 +323,16 @@ const SearchPage = () => {
                       addProduct={addProduct}
                     />
                   ))}
-              </div>
-            ) : (
-              // Message for no matches
-              <div style={styles.emptyCartSearch}>
-                <div style={styles.emptyCartText}>No products found</div>
-              </div>
-            )}
-          </div>
-        )}
+                </div>
+              ) : (
+                // Message for no matches
+                <div style={styles.emptyCartSearch}>
+                  <div style={styles.emptyCartText}>No products found</div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Empty Cart */}
         {selectedProducts.length === 0 && (

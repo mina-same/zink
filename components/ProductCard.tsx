@@ -13,6 +13,9 @@ const styles: {
   name: CSSProperties;
   NamesContainer: CSSProperties;
   right: CSSProperties;
+  dropdownContainer: CSSProperties;
+  dropdownOption: CSSProperties;
+  dropdownOptionDivider: CSSProperties;
 } = {
   container: {
     display: "flex",
@@ -55,7 +58,7 @@ const styles: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    gap: 100,
+    gap: 70,
   },
   stockText: {
     textAlign: "right",
@@ -73,10 +76,52 @@ const styles: {
     gap: 6,
     display: "flex",
   },
+  dropdownContainer: {
+    position: "absolute",
+    marginTop: "8px",
+    padding: "8px",
+    background: "white",
+    boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+    borderRadius: "8px",
+    border: "1px solid #D0D5DD",
+    zIndex: 10,
+    width: "fit content",
+  },
+  dropdownOption: {
+    padding: "8px",
+    color: "#344054",
+    fontSize: "16px",
+    fontFamily: "Arial, sans-serif",
+    fontWeight: "400",
+    cursor: "pointer",
+  },
+  dropdownOptionDivider: {
+    borderBottom: "1px solid #D0D5DD",
+  },
 };
 
-const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) => {
+const ProductCard = ({
+  kay,
+  productData,
+  deleteProduct,
+  handleQuantityChange,
+}) => {
   const [quantity, setQuantity] = useState(productData.quantity);
+  const [selectedPackaging, setSelectedPackaging] = useState(
+    "Default packaging (free)"
+  );
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const packagingOptions = [
+    "Default packaging (free)",
+    "Packaging one",
+    "Packaging two",
+  ];
+
+  const handleOptionClick = (option) => {
+    setSelectedPackaging(option);
+    setShowDropdown(false);
+  };
 
   const handleDelete = () => {
     deleteProduct(productData.id); // Call deleteProduct function passed from parent
@@ -92,7 +137,8 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
 
   const handleDecrement = () => {
     setQuantity((prev) => {
-      if (prev > 1) { // Prevent quantity from going below 1
+      if (prev > 1) {
+        // Prevent quantity from going below 1
         const newQuantity = prev - 1;
         handleQuantityChange(productData.id, newQuantity); // Update quantity in the parent
         return newQuantity;
@@ -110,7 +156,14 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
         height={198}
       />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "24px", flex: 1}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "24px",
+          flex: 1,
+        }}
+      >
         <div style={styles.right}>
           {/* name and category and insock and size and color */}
           <div>
@@ -248,7 +301,9 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
                 boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
                 border: "1px solid #D0D5DD",
                 borderRadius: "8px",
+                cursor: "pointer",
               }}
+              onClick={() => setShowDropdown((prev) => !prev)}
             >
               <div style={{ flex: 1, display: "flex" }}>
                 <span
@@ -259,18 +314,7 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
                     fontWeight: "400",
                   }}
                 >
-                  Default package{" "}
-                </span>
-                <span
-                  style={{
-                    color: "#8A8A8A",
-                    fontSize: "16px",
-                    fontFamily: "Arial, sans-serif",
-                    fontWeight: "400",
-                  }}
-                >
-                  {" "}
-                  (free)
+                  {selectedPackaging}
                 </span>
               </div>
               <div
@@ -287,6 +331,23 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
                 />
               </div>
             </div>
+            {showDropdown && (
+              <div style={styles.dropdownContainer}>
+                {packagingOptions.map((option, index) => (
+                  <div
+                    key={option}
+                    style={{
+                      ...styles.dropdownOption,
+                      ...(index !== packagingOptions.length - 1 &&
+                        styles.dropdownOptionDivider),
+                    }}
+                    onClick={() => handleOptionClick(option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Quantity */}
@@ -326,7 +387,9 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
                   cursor: "pointer",
                   opacity: 0.5,
                 }}
-                onClick={() => handleQuantityChange(productData.id, productData.quantity + 1)}
+                onClick={() =>
+                  handleQuantityChange(productData.id, productData.quantity + 1)
+                }
               >
                 +
               </div>
@@ -353,7 +416,9 @@ const ProductCard = ({ kay, productData, deleteProduct, handleQuantityChange}) =
                   cursor: "pointer",
                   opacity: 0.5,
                 }}
-                onClick={() => handleQuantityChange(productData.id, productData.quantity - 1)}
+                onClick={() =>
+                  handleQuantityChange(productData.id, productData.quantity - 1)
+                }
               >
                 -
               </div>

@@ -49,6 +49,9 @@ const styles = {
   },
   stockText: {
     textAlign: "right",
+    display : "flex",
+    justifyContent: "center",
+    alignItems: "center", 
     color: "#372166",
     fontSize: 12,
     fontFamily: "Arial",
@@ -66,13 +69,13 @@ const styles = {
   colorAndSize: {
     display: "flex",
     gap: "10px",
-    alignItems: "start",
+    alignItems: "center", 
     justifyContent: "start",
   },
   infoConatiner: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
+    gap: "2px",
   },
   dot: {
     display: "flex",
@@ -87,12 +90,12 @@ const styles = {
   }
 };
 
-const ProductSearchResultCard = ({ matchingProducts, addProduct }) => {
+  const ProductSearchResultCard = ({ matchingProducts, addProduct }) => {
 
 
-  const handleAdding = () => {
-    addProduct(matchingProducts.id); 
-  }
+    const handleAdding = () => {
+      addProduct(matchingProducts.id); 
+    }
   
   return (
     <div>
@@ -116,7 +119,7 @@ const ProductSearchResultCard = ({ matchingProducts, addProduct }) => {
           <div style={styles.right}>
             {/* name and category and insock and size and color */}
             <div style={styles.infoConatiner}>
-              <div>
+              <div style={{paddingTop: "10px"}}>
                 <p style={styles.category}>{matchingProducts?.category}</p>
                 <h3 style={styles.name}>{matchingProducts?.name}</h3>
               </div>
@@ -134,13 +137,15 @@ const ProductSearchResultCard = ({ matchingProducts, addProduct }) => {
                     : "Extra Large"}
                 </span>
               </div>
+
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  height: "100%",
+                  height: "10px",
                   gap: "10px",
+                  marginBottom: "10px",
                 }}
               >
                 <div>

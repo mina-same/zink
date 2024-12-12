@@ -11,8 +11,7 @@ const OrderStepOne = () => {
           fontSize: 32,
           fontFamily: "Arial",
           fontWeight: "700",
-          lineHeight: 10,
-          wordWrap: "break-word",
+          padding:" 110px 0px 50px 0px",
         }}
       >
         Create Order
