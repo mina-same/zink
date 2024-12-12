@@ -13,147 +13,7 @@ import Image from "next/image";
 import ProductCard from "./ProductCard";
 import { data } from "autoprefixer";
 import ProductSearchResultCard from "./ProductSearchResultCard";
-
-const styles = {
-  container: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 24,
-    backgroundColor: "#F9FAFB",
-    baddingBottom: "100px",
-  },
-  header: {
-    width: "640px",
-    color: "#372166",
-    fontSize: 32,
-    fontFamily: "Arial, sans-serif",
-    fontWeight: "700",
-    backgroundColor: "#ffffff",
-    padding: "24px 0px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 8,
-  },
-  subText: {
-    width: "100%",
-    color: "#344054",
-    fontSize: 14,
-    fontFamily: "Inter, sans-serif",
-    fontWeight: "500",
-    lineHeight: "20px",
-    padding: "0px 0px 0px 20px",
-  },
-  searchInputContainer: {
-    width: "100%",
-    maxWidth: 600,
-    padding: "10px 14px",
-    background: "#FFFFFF",
-    boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
-    borderRadius: 8,
-    border: "1px solid #D0D5DD",
-    display: "flex",
-    alignItems: "center",
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: "Inter, sans-serif",
-    fontWeight: 400,
-    lineHeight: "24px",
-    color: "#101828",
-    opacity: 0.5,
-    backgroundColor: "#fff",
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    gap: 16,
-    width: "640px",
-  },
-  emptyCart: {
-    width: "600px",
-    padding: 16,
-    borderRadius: 8,
-    border: "1px solid #D6BBFB",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 16,
-    marginTop: 24,
-    textAlign: "center",
-    backgroundColor: "#FFFFFF",
-  },
-  emptyCartText: {
-    color: "#505D68",
-    fontSize: 15,
-    fontFamily: "Arial",
-    fontWeight: "700",
-    // marginTop: "290px",
-  },
-  searchResultsContainer: {
-    width: "100%",
-    maxWidth: 600,
-    marginTop: 10,
-    background: "#f9fafb",
-    border: "1px solid #ddd",
-    borderRadius: 8,
-    boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-    zIndex: 1000,
-    position: "absolute",
-
-  },
-  searchResult: {
-    top: "-10px",
-    left: "-305px",
-    width: "600px",
-    border: "1px solid rgb(208, 213, 221)",
-    zIndex: 999,
-    position: "absolute",
-    background: "rgb(255, 255, 255)",
-    maxHeight: "500px",
-    minHeight: "257px",
-    overflowY: "auto",
-    borderRadius: "7px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingLeft: "3px",
-    // paddingTop: "546px",
-  },
-  searchResultItem: {
-    padding: "10px 14px",
-    cursor: "pointer",
-    color: "#101828",
-    fontSize: "16px",
-    fontFamily: "Inter, sans-serif",
-  },
-  emptyCartSearch: {
-    top: "-10px",
-    left: "-300px",
-    width: "600px",
-    border: "1px solid rgb(208, 213, 221)",
-    zIndex: 999,
-    position: "absolute",
-    background: "rgb(255, 255, 255)",
-    maxHeight: "500px",
-    minHeight: "257px",
-    overflowY: "auto",
-    borderRadius: "7px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingLeft: "3px",
-  },
-};
+import styles from './searchPage.module.css';
 
 const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -184,8 +44,6 @@ const SearchPage = () => {
   const matchingProducts = (productsData?.products || []).filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  console.log(matchingProducts);
 
   const deleteProduct = (productId) => {
     setSelectedProducts(
@@ -264,15 +122,16 @@ const SearchPage = () => {
   }, []);
 
   return (
-    <div style={styles.container}>
-      {/* Header */}
-      <div style={styles.header}>
-        <div style={styles.subText}>
+    <div className={styles.container}>
+      <div className={styles.header}>
+
+        {/* titile */}
+        <div className={styles.subText}>
           Search Products to add them to your orders
         </div>
 
         {/* Search Input */}
-        <div ref={searchInputRef} style={styles.searchInputContainer}>
+        <div ref={searchInputRef} className={styles.searchInputContainer}>
           <TextField
             variant="standard"
             placeholder="Search Products and Variants"
@@ -287,7 +146,7 @@ const SearchPage = () => {
                   <SearchIcon style={{ color: "#7F56D9" }} />
                 </InputAdornment>
               ),
-              style: styles.searchInput,
+              className: styles.searchInput,
             }}
           />
         </div>
@@ -295,13 +154,13 @@ const SearchPage = () => {
         {/* Search Results */}
         <div style={{ position: "relative" }}>
           {showSearchResults && (
-            <div style={styles.searchResultsContainer}>
+            <div className={styles.searchResultsContainer}>
               {isLoading ? (
                 // Display spinner during loading
                 <CircularProgress />
               ) : searchQuery === "" ? (
                 // Empty state when search query is empty
-                <div style={styles.emptyCartSearch}>
+                <div className={styles.emptyCartSearch}>
                   <Image
                     src="/images/svg/empty-cart.svg"
                     alt="Empty Cart"
@@ -309,13 +168,13 @@ const SearchPage = () => {
                     height={92}
                     style={{ borderRadius: 8 }}
                   />
-                  <div style={styles.emptyCartText}>
+                  <div className={styles.emptyCartText}>
                     Added products will appear here
                   </div>
                 </div>
               ) : matchingProducts.length > 0 ? (
                 // Show results count when matches exist
-                <div style={styles.searchResult}>
+                <div className={styles.searchResult}>
                   {matchingProducts.map((product) => (
                     <ProductSearchResultCard
                       key={product.id}
@@ -326,8 +185,8 @@ const SearchPage = () => {
                 </div>
               ) : (
                 // Message for no matches
-                <div style={styles.emptyCartSearch}>
-                  <div style={styles.emptyCartText}>No products found</div>
+                <div className={styles.emptyCartSearch}>
+                  <div className={styles.emptyCartText}>No products found</div>
                 </div>
               )}
             </div>
@@ -336,7 +195,7 @@ const SearchPage = () => {
 
         {/* Empty Cart */}
         {selectedProducts.length === 0 && (
-          <div style={styles.emptyCart}>
+          <div className={styles.emptyCart}>
             <Image
               src="/images/svg/empty-cart.svg"
               alt="Empty Cart"
@@ -344,7 +203,7 @@ const SearchPage = () => {
               height={92}
               style={{ borderRadius: 8 }}
             />
-            <div style={styles.emptyCartText}>
+            <div className={styles.emptyCartText}>
               Added products will appear here
             </div>
           </div>
@@ -353,27 +212,9 @@ const SearchPage = () => {
         {/* Order Products */}
         {selectedProducts.length > 0 && (
           <div>
-            <div
-              style={{
-                width: "100%",
-                color: "#101828",
-                fontSize: 18,
-                fontFamily: "Inter",
-                fontWeight: "500",
-              }}
-            >
-              Order Details
-            </div>
+            <div className={styles.orderDetails}>Order Details</div>
 
-            <div
-              style={{
-                width: "100%",
-                height: "1px",
-                background: "#EAECF0",
-                marginTop: 10,
-                marginBottom: 11,
-              }}
-            />
+            <div className={styles.orderContainer} />
             {/* Only show the selected products */}
             {selectedProducts.map((product) => (
               <ProductCard
@@ -383,38 +224,10 @@ const SearchPage = () => {
                 handleQuantityChange={handleQuantityChange}
               />
             ))}
-            <div
-              style={{
-                width: "100%",
-                height: "1px",
-                background: "#EAECF0",
-                marginTop: 10,
-                marginBottom: 11,
-              }}
-            />
+            <div className={styles.priceLine} />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div
-                style={{
-                  width: "100%",
-                  color: "#101828",
-                  fontSize: 18,
-                  fontFamily: "Inter",
-                  fontWeight: "500",
-                }}
-              >
-                Total
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  color: "#6941C6",
-                  fontSize: 20,
-                  fontFamily: "Arial",
-                  fontWeight: "700",
-                  display: "flex",
-                  justifyContent: "end",
-                }}
-              >
+              <div className={styles.priceTotal}>Total</div>
+              <div className={styles.priceStyle}>
                 LE{" "}
                 {selectedProducts.reduce(
                   (acc, product) => acc + product.totalPrice,
@@ -426,10 +239,11 @@ const SearchPage = () => {
         )}
       </div>
 
-      <div style={{ width: "640px", height: "2px", background: "#EAECF0" }} />
+      {/* Line */}
+      <div className={styles.line} />
 
       {/* Buttons */}
-      <div style={styles.buttons}>
+      <div className={styles.buttons}>
         <Button
           variant="contained"
           sx={{
@@ -457,6 +271,7 @@ const SearchPage = () => {
           Next
         </Button>
       </div>
+
     </div>
   );
 };

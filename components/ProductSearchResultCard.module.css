@@ -1,0 +1,140 @@
+/* ProductSearchResultCard.module.css */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 590px;
+    height: 136px;
+    gap: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: white;
+    box-shadow: 0px 4px 20px -2px rgba(16, 24, 40, 0.06);
+    border-radius: 8px;
+    overflow: visible; /* Make sure the shadow isn't clipped */
+    margin-bottom: 16px;
+  }
+  
+  .category {
+    color: #344054;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+  }
+  
+  .name {
+    color: #372166;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .NamesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 100px;
+  }
+  
+  .stockText {
+    text-align: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #372166;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+  }
+  
+  .stockBadge {
+    padding: 4px 8px;
+    background: #ecfef3;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    display: flex;
+  }
+  
+  .colorAndSize {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .infoConatiner {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .dot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+  }
+  
+  .add {
+    color: #372166;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .stock {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: end;
+  }
+  
+  .quantityNumber {
+    color: #372166;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .sizeValue {
+    color: #372166;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+  }
+  
+  .productColor {
+    color: #372166;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .sizeValue2 {
+    color: #372166;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+  }
+  
+  .colorSizeContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10px;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  

@@ -1,40 +1,17 @@
 import Image from "next/image";
 import React from "react";
+import styles from "./Navbar.module.css";  // Import the CSS module
 
 const Navbar = () => {
   return (
-    <div style={{ width: "100%", height: "100%", position: "relative" }}>
-      <div
-        style={{
-          width: "100%",
-          height: 80,
-          left: 0,
-          top: 0,
-          position: "absolute",
-          background: "white",
-        }}
-      />
-      <div
-        style={{
-          width: "100%",
-          height: 2,
-          left: 0,
-          top: 80,
-          position: "absolute",
-          background: "#EAECF0",
-        }}
-      />
+    <div className={styles.container}>
+      <div className={styles.header} />
+      <div className={styles.line} />
       <Image
         width="100"
         height="100"
         alt="log"
-        style={{
-          width: 106,
-          height: 41,
-          left: 113,
-          top: 25,
-          position: "absolute",
-        }}
+        className={styles.logo}  // Apply the class from the CSS module
         src="https://res.cloudinary.com/dtcr7vypb/image/upload/v1733785695/hgwjx02qdrjslpvcznjl.png"
       />
     </div>

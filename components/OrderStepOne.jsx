@@ -1,19 +1,10 @@
 import React from "react";
+import styles from "./OrderStepOne.module.css"; // Import the CSS module
 
 const OrderStepOne = () => {
   return (
     <div>
-      <div
-        style={{
-          width: "100%",
-          textAlign: "center",
-          color: "#372166",
-          fontSize: 32,
-          fontFamily: "Arial",
-          fontWeight: "700",
-          padding:" 110px 0px 50px 0px",
-        }}
-      >
+      <div className={styles.title}>
         Create Order
       </div>
     </div>
